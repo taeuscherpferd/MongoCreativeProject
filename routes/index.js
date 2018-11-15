@@ -2,21 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
 
-mongoose.connect('mongodb://localhost/commentDB', { useNewUrlParser: true }); //Connects to a mongo database called "commentDB"
-
-//TODO: This needs to be redone to accept a photo instead of text
-var photoSchema = mongoose.Schema({ //Defines the Schema for this database
-  Name: String,
-});
-
-var Photo = mongoose.model('Photo', photoSchema); //Makes an object from that schema as a model
-
-var db = mongoose.connection; //Saves the connection as a variable to use
-db.on('error', console.error.bind(console, 'connection error:')); //Checks for connection errors
-
-db.once('open', function() { //Lets us know when we're connected
-  console.log('Connected');
-});
+var Photo = mongoose.model('image'); //Makes an object from that schema as a model
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
