@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var multer = require('multer');
 
 mongoose.connect('mongodb://localhost/scavengerHunt', { useNewUrlParser: true });
 require('./models/image');
@@ -45,6 +46,27 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.get('/images', function(req, res) {
+  console.log("Did I make it?");
+  indexRouter.getImages(function(err, genres) {
+    if (err) { throw err; }
+    res.json(genres);
+  });
+});
+
+app.get('/images/:id', function(req, res) {
+
+  //calling the function from index.js class using routes object..
+  indexRouter.getImageById(req.params.id, function(err, genres) {
+  console.log("Get image by ID");
+    if (err) {
+      throw err;
+    }
+    //res.download(genres.path);
+    res.send(genres.path);
+  });
 });
 
 module.exports = app;
