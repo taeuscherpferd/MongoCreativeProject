@@ -1,8 +1,17 @@
 var mongoose = require('mongoose');
 
-//TODO: This needs to be redone to accept a photo instead of text
-var photoSchema = mongoose.Schema({ //Defines the Schema for this database
-  img: {data: Buffer, contentType: String} 
+//path and originalname are the fields stored in mongoDB
+var imageSchema = mongoose.Schema({
+  path: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  originalname: {
+    type: String,
+    required: true
+  }
+
 });
 
-mongoose.model('image', photoSchema);
+mongoose.model('image', imageSchema);
