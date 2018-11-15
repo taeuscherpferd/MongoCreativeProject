@@ -67,12 +67,6 @@ function mainCtrl($scope, imageFetcher, counterFetcher, $http) {
       });
   };
 
-  var getCounter = function() {
-    return $http.get('/counter').success(function(data) {
-      angular.copy(data, $scope.counter);
-    });
-  };
-
   /* Function to shuffle array
    
      var shuffleArray = function(array) {
