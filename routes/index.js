@@ -4,6 +4,37 @@ var multer = require('multer');
 var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
 
 var Image = mongoose.model('image'); //Makes an object from that schema as a model
+var CounterSchema = mongoose.Schema({ //Defines the Schema for this database
+  yes: Number,
+  no: Number
+});
+
+var Counter = mongoose.model('Counter', CounterSchema); //Makes an object from that schema as a model
+
+router.put('/counter', function(req, res, next) {
+  //Adds counter if none in database
+  Counter.countDocuments({}, function(err, count) {
+    if (err) { console.log(err); }
+    if (count == 0) {
+      var originalCounter = new Counter({yes:0,no:0});
+      originalCounter.save(function(err) {
+        if (err) console.log(err);
+        console.log("added counter");
+      });
+       console.log('there are %d jungle adventures', count);
+    } else {
+      //Should update the single counter doc (add a yes value?)
+      res.send(200);
+    }
+  });
+});
+
+router.get('/counter', function(req,res,next) {
+    Counter.find(function(err, comments){
+    if(err){ return next(err); }
+    res.json(comments);
+  });
+});
 
 router.get('/images', function(req, res, next) {
   Image.find(function(err, images) {
@@ -57,7 +88,7 @@ router.post('/upload', upload.any(), function(req, res, next) {
 
   //we are passing two objects in the addImage method.. which is defined above..
   router.addImage(imagepath, function(err) {
-    if (err) {console.log("Ah darn broken again")}
+    if (err) { console.log("Ah darn broken again") }
     console.log("ImageSaved");
   });
 
