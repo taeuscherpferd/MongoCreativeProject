@@ -5,6 +5,8 @@ var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
 
 var Image = mongoose.model('image'); //Makes an object from that schema as a model
 var counter = [{ yes: 0, no: 0 }];
+var currentImage = "";
+
 router.put('/counter/yes', function(req, res, next) {
   counter[0].yes++;
   if (counter[0].yes == 5) {
@@ -25,8 +27,19 @@ router.put('/counter/no', function(req, res, next) {
 
 });
 
+router.post('/currentimage', function(req, res, next) {
+  console.log(req.body);
+  currentImage = req.body.curImage;
+  res.send(currentImage);
+});
+
 router.get('/counter', function(req, res, next) {
   res.send(counter);
+});
+
+router.get('/currentimage', function(req, res, next) {
+  console.log(currentImage);
+  res.send(currentImage);
 });
 
 router.get('/images', function(req, res, next) {
