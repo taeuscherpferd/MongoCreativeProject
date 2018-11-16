@@ -52,7 +52,7 @@ router.addImage = function(image, callback) {
 // To get more info about 'multer'.. you can go through https://www.npmjs.com/package/multer..
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'public/uploads');
   },
   filename: function(req, file, cb) {
     cb(null, file.originalname);
