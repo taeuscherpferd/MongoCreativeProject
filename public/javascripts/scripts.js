@@ -52,6 +52,7 @@ function mainCtrl($scope, imageFetcher, counterFetcher, $http) {
     });
 
   $scope.incrementYes = function() {
+    
     $http.put('/counter/yes')
       .success(function(data) {
         $scope.counter = data;
