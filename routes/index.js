@@ -66,6 +66,15 @@ var storage = multer.diskStorage({
   }
 });
 
+router.delete('/deletealldonttouch', function(req, res, next) {
+  console.log("in Delete");
+  Image.remove({}, function(err) {
+    if (err) { return next(err); }
+    console.log('collection removed');
+  });
+  res.sendStatus(200);
+});
+
 var upload = multer({
   storage: storage
 });
