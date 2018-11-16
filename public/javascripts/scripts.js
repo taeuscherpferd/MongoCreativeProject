@@ -52,18 +52,16 @@ function mainCtrl($scope, imageFetcher, counterFetcher, $http) {
     });
 
   $scope.incrementYes = function() {
-    $http.put('/counter')
+    $http.put('/counter/yes')
       .success(function(data) {
-        console.log("yes worked");
-        $scope.counter[0].yes++;
+        $scope.counter = data;
       });
   };
 
   $scope.incrementNo = function() {
-    $http.put('/counter')
+    $http.put('/counter/no')
       .success(function(data) {
-        console.log("no worked");
-        $scope.counter[0].no++;
+        $scope.counter = data;
       });
   };
 

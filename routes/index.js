@@ -4,36 +4,29 @@ var multer = require('multer');
 var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
 
 var Image = mongoose.model('image'); //Makes an object from that schema as a model
-var CounterSchema = mongoose.Schema({ //Defines the Schema for this database
-  yes: Number,
-  no: Number
+var counter = [{ yes: 0, no: 0 }];
+router.put('/counter/yes', function(req, res, next) {
+  counter[0].yes++;
+  if (counter[0].yes == 5) {
+    counter[0].yes = 0;
+    counter[0].no = 0;
+  }
+  res.send(counter);
+
 });
 
-var Counter = mongoose.model('Counter', CounterSchema); //Makes an object from that schema as a model
+router.put('/counter/no', function(req, res, next) {
+  counter[0].no++;
+  if (counter[0].no == 5) {
+    counter[0].yes = 0;
+    counter[0].no = 0;
+  }
+  res.send(counter);
 
-router.put('/counter', function(req, res, next) {
-  //Adds counter if none in database
-  Counter.countDocuments({}, function(err, count) {
-    if (err) { console.log(err); }
-    if (count == 0) {
-      var originalCounter = new Counter({yes:0,no:0});
-      originalCounter.save(function(err) {
-        if (err) console.log(err);
-        console.log("added counter");
-      });
-       console.log('there are %d jungle adventures', count);
-    } else {
-      //Should update the single counter doc (add a yes value?)
-      res.send(200);
-    }
-  });
 });
 
-router.get('/counter', function(req,res,next) {
-    Counter.find(function(err, comments){
-    if(err){ return next(err); }
-    res.json(comments);
-  });
+router.get('/counter', function(req, res, next) {
+  res.send(counter);
 });
 
 router.get('/images', function(req, res, next) {
